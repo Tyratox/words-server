@@ -11,6 +11,7 @@ module.exports = gql`
   type Post {
     id: ID!
     title: String!
+    lead: String!
     content: String!
     sources: String
     userId: ID!

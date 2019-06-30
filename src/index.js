@@ -13,7 +13,9 @@ db.sequelize.sync().then(() => {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: ({ request }) => ({ db, user: request.user })
+    context: ({ req: request }) => ({ db, user: request.user }),
+    playground: false,
+    introspection: false
   });
 
   const app = express();
