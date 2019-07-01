@@ -25,8 +25,8 @@ module.exports = gql`
     me: User!
   }
   type Mutation {
-    createPost(title: String, content: String!, userId: ID!): Post!
-    updatePost(id: ID!, title: String, content: String!): [Int!]!
+    createPost(title: String!, lead: String, content: String!): Post!
+    updatePost(id: ID!, title: String!, lead: String!, content: String!): Post!
     deletePost(id: ID!): Int!
   }
 `;

@@ -28,13 +28,14 @@ module.exports = {
     me: (parent, { id }, { db, user }, info) => user
   },
   Mutation: {
-    createPost: (parent, { title, content }, { db, user }, info) =>
+    createPost: (parent, { title, lead, content }, { db, user }, info) =>
       db.post.create({
-        title: title,
-        content: content,
+        title,
+        lead,
+        content,
         userId: user.id
       }),
-    updatePost: (parent, { title, content, id }, { db, user }, info) =>
+    updatePost: (parent, { title, lead, content, id }, { db, user }, info) =>
       db.post.findById(id).then(post => {
         if (!post) {
           return new NotFoundError();
@@ -47,8 +48,9 @@ module.exports = {
         //only update the post if the userId matches
         return db.post.update(
           {
-            title: title,
-            content: content
+            title,
+            lead,
+            content
           },
           {
             where: {
