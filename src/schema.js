@@ -7,6 +7,8 @@ module.exports = gql`
     email: String!
     locale: String!
     posts: [Post!]!
+    updatedAt: Int
+    createdAt: Int
   }
   type Post {
     id: ID!
@@ -16,6 +18,8 @@ module.exports = gql`
     sources: String
     userId: ID!
     user: User!
+    updatedAt: String
+    createdAt: String
   }
   type Query {
     latestPosts(count: Int!): [Post!]
