@@ -10,11 +10,26 @@ module.exports = {
     user: (parent, args, context, info) => parent.getUser()
   },
   Query: {
-    latestPosts: (parent, { count }, { db }, info) =>
-      db.post.findAll({
-        limit: count,
-        order: [["createdAt", "DESC"]]
-      }),
+    latestPosts: (parent, { count, after }, { db }, info) => {
+      if (after) {
+        return db.post.findOne({ where: { id: after } }).then(post =>
+          post
+            ? db.post.findAll({
+                where: {
+                  createdAt: { [Op.lt]: post.createdAt }
+                },
+                limit: count,
+                order: [["createdAt", "DESC"]]
+              })
+            : Promise.reject(new Error("The given post id doesn't exist"))
+        );
+      } else {
+        return db.post.findAll({
+          limit: count,
+          order: [["createdAt", "DESC"]]
+        });
+      }
+    },
     postsAfterTimestamp: (parent, { timestamp }, { db }, info) =>
       db.post.findAll({
         where: {

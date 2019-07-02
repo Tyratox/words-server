@@ -22,7 +22,7 @@ module.exports = gql`
     createdAt: String
   }
   type Query {
-    latestPosts(count: Int!): [Post!]
+    latestPosts(count: Int!, after: Int): [Post!]
     postsAfterTimestamp(timestamp: Int!): [Post!]
     post(id: ID!): Post
     user(id: ID!): User
