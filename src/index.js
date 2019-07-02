@@ -37,7 +37,7 @@ db.sequelize.sync().then(() => {
 
   server.applyMiddleware({ app, path: GRAPHQL_PATH });
 
-  app.listen({ port: 4000 }, () =>
-    console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
+  app.listen({ port: 8004 }, () =>
+    console.log(`🚀 Server ready at http://localhost:8004${server.graphqlPath}`)
   );
 });
