@@ -78,7 +78,7 @@ module.exports = {
       { db, user },
       info
     ) =>
-      db.post.findById(id).then(post => {
+      db.post.find({ where: { id } }).then(post => {
         if (!post) {
           return new NotFoundError();
         }
@@ -108,7 +108,7 @@ module.exports = {
           );
       }),
     deletePost: (parent, { id }, { db }, info) =>
-      db.post.findById(id).then(post => {
+      db.post.findOne({ where: { id } }).then(post => {
         if (!post) {
           return new NotFoundError();
         }
