@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const Post = sequelize.define(
-    "post",
+  const PostRevision = sequelize.define(
+    "postRevision",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -30,12 +30,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  Post.associate = models => {
-    Post.belongsTo(models.user);
-    Post.hasMany(models.postRevision);
+  PostRevision.associate = models => {
+    PostRevision.belongsTo(models.post);
   };
 
-  Post.afterAssociation = db => {};
+  PostRevision.afterAssociation = db => {};
 
-  return Post;
+  return PostRevision;
 };

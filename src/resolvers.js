@@ -43,14 +43,37 @@ module.exports = {
     me: (parent, { id }, { db, user }, info) => user
   },
   Mutation: {
-    createPost: (parent, { title, lead, content }, { db, user }, info) =>
-      db.post.create({
-        title,
-        lead,
-        content,
-        userId: user.id
-      }),
-    updatePost: (parent, { title, lead, content, id }, { db, user }, info) =>
+    createPost: (
+      parent,
+      { title, lead, content, sources },
+      { db, user },
+      info
+    ) =>
+      db.post
+        .create({
+          title,
+          lead,
+          content,
+          sources,
+          userId: user.id
+        })
+        .then(post => {
+          return db.postRevision
+            .create({
+              title,
+              lead,
+              content,
+              sources,
+              postId: post.id
+            })
+            .then(() => post);
+        }),
+    updatePost: (
+      parent,
+      { id, title, lead, content, sources },
+      { db, user },
+      info
+    ) =>
       db.post.findById(id).then(post => {
         if (!post) {
           return new NotFoundError();
@@ -61,19 +84,24 @@ module.exports = {
         }
 
         //only update the post if the userId matches
-        return db.post.update(
-          {
-            title,
-            lead,
-            content
-          },
-          {
-            where: {
-              id,
-              userId: user.id
-            }
-          }
-        );
+        return db.postRevision
+          .create({ title, lead, content, sources, postId: id })
+          .then(() =>
+            db.post.update(
+              {
+                title,
+                lead,
+                content,
+                sources
+              },
+              {
+                where: {
+                  id,
+                  userId: user.id
+                }
+              }
+            )
+          );
       }),
     deletePost: (parent, { id }, { db }, info) =>
       db.post.findById(id).then(post => {
@@ -86,12 +114,14 @@ module.exports = {
         }
 
         //only update the post if the userId matches
-        return db.post.destroy({
-          where: {
-            id,
-            userId: user.id
-          }
-        });
+        return db.postRevision.destroy({ where: { postId: id } }).then(() =>
+          db.post.destroy({
+            where: {
+              id,
+              userId: user.id
+            }
+          })
+        );
       })
   }
 };
