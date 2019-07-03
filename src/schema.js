@@ -40,7 +40,7 @@ module.exports = gql`
     updatePost(
       id: Int!
       title: String!
-      lead: String!
+      lead: String
       content: String!
       sources: String
     ): Post!
