@@ -20,8 +20,8 @@ module.exports = gql`
     user: User!
     updatedAt: String
     createdAt: String
-    canEdit: boolean;
-    canDelete: boolean;
+    canEdit: Boolean
+    canDelete: Boolean
   }
   type Query {
     latestPosts(count: Int!, after: Int): [Post!]
