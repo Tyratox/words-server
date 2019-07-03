@@ -29,7 +29,7 @@ module.exports = gql`
     author: String
     url: String
   }
-  input Source {
+  input SourceInput {
     type: String!
     title: String!
     author: String
@@ -47,14 +47,14 @@ module.exports = gql`
       title: String!
       lead: String
       content: String!
-      sources: [Source!]
+      sources: [SourceInput!]
     ): Post!
     updatePost(
       id: Int!
       title: String!
       lead: String
       content: String!
-      sources: [Source!]
+      sources: [SourceInput!]
     ): Post!
     deletePost(id: Int!): Int!
   }
