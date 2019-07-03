@@ -20,8 +20,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
       sources: {
-        type: DataTypes.JSON,
+        type: DataTypes.TEXT("long"),
         allowNull: true,
+        set(val) {
+          this.setDataValue("sources", JSON.stringify(val));
+        },
         get() {
           return JSON.parse(this.getDataValue("sources"));
         }
