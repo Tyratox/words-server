@@ -15,7 +15,7 @@ module.exports = gql`
     title: String!
     lead: String!
     content: String!
-    sources: String
+    sources: [Source!]
     userId: ID!
     user: User!
     updatedAt: String
@@ -24,6 +24,12 @@ module.exports = gql`
     canDelete: Boolean
   }
   type Source {
+    type: String!
+    title: String!
+    author: String
+    url: String
+  }
+  input Source {
     type: String!
     title: String!
     author: String
