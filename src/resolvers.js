@@ -7,7 +7,9 @@ module.exports = {
       parent.getPosts({ order: [["createdAt", "DESC"]] })
   },
   Post: {
-    user: (parent, args, context, info) => parent.getUser()
+    user: (parent, args, context, info) => parent.getUser(),
+    canEdit: (parent, args, { user }, info) => parent.getUser().id === user.id,
+    canDelete: (parent, args, { user }, info) => parent.getUser().id === user.id
   },
   Query: {
     latestPosts: (parent, { count, after }, { db }, info) => {
