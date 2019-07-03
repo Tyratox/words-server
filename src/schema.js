@@ -38,12 +38,12 @@ module.exports = gql`
       sources: String
     ): Post!
     updatePost(
-      id: ID!
+      id: Int!
       title: String!
       lead: String!
       content: String!
       sources: String
     ): Post!
-    deletePost(id: ID!): Int!
+    deletePost(id: Int!): Int!
   }
 `;
