@@ -105,7 +105,8 @@ module.exports = {
                 }
               }
             )
-          );
+          )
+          .then(() => post);
       }),
     deletePost: (parent, { id }, { db }, info) =>
       db.post.findOne({ where: { id } }).then(post => {
