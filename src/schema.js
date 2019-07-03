@@ -23,6 +23,12 @@ module.exports = gql`
     canEdit: Boolean
     canDelete: Boolean
   }
+  type Source {
+    type: String!
+    title: String!
+    author: String
+    url: String
+  }
   type Query {
     latestPosts(count: Int!, after: Int): [Post!]
     postsAfterTimestamp(timestamp: Int!): [Post!]
@@ -35,14 +41,14 @@ module.exports = gql`
       title: String!
       lead: String
       content: String!
-      sources: String
+      sources: [Source!]
     ): Post!
     updatePost(
       id: Int!
       title: String!
       lead: String
       content: String!
-      sources: String
+      sources: [Source!]
     ): Post!
     deletePost(id: Int!): Int!
   }
