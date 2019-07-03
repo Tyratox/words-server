@@ -21,7 +21,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       sources: {
         type: DataTypes.JSON,
-        allowNull: true
+        allowNull: true,
+        get() {
+          return JSON.parse(this.getDataValue("sources"));
+        }
       }
     },
     {
